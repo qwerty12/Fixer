@@ -1,7 +1,5 @@
 package com.brouken.fixer;
 
-import android.app.admin.DevicePolicyManager;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -13,8 +11,6 @@ import android.preference.SwitchPreference;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-
-import com.brouken.fixer.feature.AppBackup;
 
 import static com.brouken.fixer.Utils.log;
 
@@ -46,32 +42,6 @@ public class SettingsActivity extends PreferenceActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_general);
             setHasOptionsMenu(true);
-
-            Preference radioPreference = findPreference("pref_radio");
-            radioPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    Shortcuts.startRadio(getContext());
-                    return true;
-                }
-            });
-
-            SwitchPreference appBackupPreference = (SwitchPreference) findPreference("pref_app_backup");
-            appBackupPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    boolean enable = (boolean) newValue;
-                    log("app backup: onPreferenceChange " + enable);
-
-                    if (enable) {
-                        AppBackup.schedule(getContext());
-                    } else {
-                        AppBackup.unschedule(getContext());
-                    }
-
-                    return true;
-                }
-            });
 
             if (Utils.isAccessibilitySettingsEnabled(this.getContext())) {
                 final PreferenceCategory categorySetup = (PreferenceCategory) findPreference("pref_setup");
