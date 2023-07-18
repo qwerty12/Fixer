@@ -42,14 +42,6 @@ public class SettingsActivity extends PreferenceActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_general);
             setHasOptionsMenu(true);
-
-            if (Utils.isAccessibilitySettingsEnabled(this.getContext())) {
-                final PreferenceCategory categorySetup = (PreferenceCategory) findPreference("pref_setup");
-                categorySetup.removePreference(findPreference("pref_accessibility"));
-
-                final PreferenceScreen preferenceScreen = (PreferenceScreen) findPreference("screen");
-                preferenceScreen.removePreference(findPreference("pref_setup"));
-            }
         }
 
         @Override
@@ -66,18 +58,6 @@ public class SettingsActivity extends PreferenceActivity {
                 return true;
             }
             return super.onOptionsItemSelected(item);
-        }
-
-        void registerSwitchChangeToServiceUpdate(String pref) {
-            SwitchPreference switchPreference = (SwitchPreference) findPreference(pref);
-            switchPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    log("onPreferenceChange");
-                    getActivity().startService(new Intent(getActivity(), MonitorService.class));
-                    return true;
-                }
-            });
         }
     }
 }
