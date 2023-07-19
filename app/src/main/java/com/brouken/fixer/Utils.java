@@ -17,7 +17,7 @@ public class Utils {
         }
     }
 
-    public static void changeIME(Context context, boolean temporaryIME) {
+    public static boolean changeIME(Context context, boolean temporaryIME) {
         // https://stackoverflow.com/questions/11036435/switch-keyboard-profile-programmatically
         // ime list -s
         // com.google.android.inputmethod.latin/com.android.inputmethod.latin.LatinIME
@@ -30,6 +30,7 @@ public class Utils {
 
         //log("changeIME()");
 
+        boolean ret = false;
         final String ime = !temporaryIME ? "com.touchtype.swiftkey/com.touchtype.KeyboardService" : "org.pocketworkstation.pckeyboard/.LatinIME";
 
         try {
@@ -38,11 +39,13 @@ public class Utils {
             }
 
             if (hasWriteSecureSettingsPerm) {
-                Settings.Secure.putString(context.getContentResolver(), Settings.Secure.DEFAULT_INPUT_METHOD, ime);
+                ret = Settings.Secure.putString(context.getContentResolver(), Settings.Secure.DEFAULT_INPUT_METHOD, ime);
             }
         }
         catch (Exception e) {
             e.printStackTrace();
         }
+
+        return ret;
     }
 }

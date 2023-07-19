@@ -13,13 +13,23 @@ import static com.brouken.fixer.Utils.log;
 
 public class MonitorService extends AccessibilityService {
 
-    private Prefs mPrefs;
+    private Prefs mPrefs = null;
+    private boolean setHk;
 
     @Override
-    protected void onServiceConnected() {
-        super.onServiceConnected();
-
+    public void onCreate() {
+        super.onCreate();
+        setHk = false;
         mPrefs = new Prefs(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        if (mPrefs != null) {
+            mPrefs.dePrefs();
+            mPrefs = null;
+        }
+        super.onDestroy();
     }
 
     @Override
@@ -27,32 +37,26 @@ public class MonitorService extends AccessibilityService {
         //log("onAccessibilityEvent()");
         //log(accessibilityEvent.toString());
 
-        if (mPrefs.isKeyboardSwitchingEnabled()) {
-            if (accessibilityEvent.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
-                final String accessibilityEventPackageName = (String) accessibilityEvent.getPackageName();
+        if (!mPrefs.isKeyboardSwitchingEnabled()) {
+            setHk = false;
+            return;
+        }
 
-                final List<String> visibleApps = new ArrayList<>();
+        if (accessibilityEvent.getEventType() != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED)
+            return;
 
-                List<AccessibilityWindowInfo> accessibilityWindowInfos = getWindows();
-                //log("windows=" + accessibilityWindowInfos.size());
-                for (AccessibilityWindowInfo accessibilityWindowInfo : accessibilityWindowInfos) {
-                    //log(accessibilityWindowInfo.toString());
+        final String rootPackageName = getRootInActiveWindow().getPackageName().toString();
+        if (rootPackageName.equals("com.termux") || rootPackageName.equals("com.microsoft.rdc.androidx")) {
+            if (!setHk)
+                setHk = Utils.changeIME(getApplicationContext(), true);
+            return;
+        }
 
-                    AccessibilityNodeInfo accessibilityNodeInfo = accessibilityWindowInfo.getRoot();
-                    if (accessibilityNodeInfo != null) {
-                        visibleApps.add(accessibilityNodeInfo.getPackageName().toString());
-                        accessibilityNodeInfo.recycle();
-                    }
-                }
-
-                if (visibleApps.contains("com.termux") || visibleApps.contains("com.microsoft.rdc.androidx")) {
-                    Utils.changeIME(getApplicationContext(), true);
-                    return;
-                }
-
-                if (accessibilityEventPackageName.equals("org.pocketworkstation.pckeyboard")) {
-                    Utils.changeIME(getApplicationContext(), false);
-                }
+        if (setHk) {
+            final String accessibilityEventPackageName = accessibilityEvent.getPackageName().toString();
+            if (accessibilityEventPackageName.equals("org.pocketworkstation.pckeyboard")) {
+                Utils.changeIME(getApplicationContext(), false);
+                setHk = false;
             }
         }
     }
@@ -60,15 +64,6 @@ public class MonitorService extends AccessibilityService {
     @Override
     public void onInterrupt() {
 
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        log("onStartCommand");
-
-        mPrefs = new Prefs(this);
-
-        return super.onStartCommand(intent, flags, startId);
     }
 
 }
