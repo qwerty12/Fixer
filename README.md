@@ -21,6 +21,6 @@ WARNING: There are no checks for required permissions or runtime applying of cha
 ## Features
 
 ### Hacker's Keyboard only in Termux and Microsoft Remote Desktop
-Description: Use SwiftKey as default IME, switch to Hacker's Keyboard in Termux and Microsoft Remote Desktop<br>
+Description: Use [OpenBoard](https://github.com/Helium314/openboard) as default IME, switch to Hacker's Keyboard in Termux and Microsoft Remote Desktop<br>
 Requirements: Accessibility and WRITE_SECURE_SETTINGS permission<br>
 Notes: Based on Tasker guide https://www.xda-developers.com/how-to-automatically-change-your-keyboard-on-a-per-app-basis/

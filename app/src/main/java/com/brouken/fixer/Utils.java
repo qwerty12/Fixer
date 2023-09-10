@@ -31,7 +31,7 @@ public class Utils {
         //log("changeIME()");
 
         boolean ret = false;
-        final String ime = !temporaryIME ? "com.touchtype.swiftkey/com.touchtype.KeyboardService" : "org.pocketworkstation.pckeyboard/.LatinIME";
+        final String ime = !temporaryIME ? "org.dslul.openboard.inputmethod.latin/.LatinIME" : "org.pocketworkstation.pckeyboard/.LatinIME";
 
         try {
             if (!hasWriteSecureSettingsPerm) {

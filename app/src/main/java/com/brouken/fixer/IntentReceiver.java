@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 
 import static com.brouken.fixer.Utils.log;
 
@@ -12,6 +13,8 @@ public class IntentReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
+        if (TextUtils.isEmpty(action))
+            return;
 
         log(action);
 

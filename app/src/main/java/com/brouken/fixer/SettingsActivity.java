@@ -2,17 +2,11 @@ package com.brouken.fixer;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
-import android.preference.PreferenceScreen;
-import android.preference.SwitchPreference;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-
-import static com.brouken.fixer.Utils.log;
 
 public class SettingsActivity extends PreferenceActivity {
 

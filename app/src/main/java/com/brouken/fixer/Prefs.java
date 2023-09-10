@@ -26,7 +26,7 @@ public class Prefs implements SharedPreferences.OnSharedPreferenceChangeListener
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-        if (s.equals("pref_keyboard_switching")) {
+        if (s != null && s.equals("pref_keyboard_switching")) {
             loadSavedPreferences();
         }
     }
