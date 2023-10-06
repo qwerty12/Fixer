@@ -8,7 +8,7 @@ public class Prefs implements SharedPreferences.OnSharedPreferenceChangeListener
 
     SharedPreferences mSharedPreferences;
 
-    private boolean pref_keyboard_switching = false;
+    public boolean pref_keyboard_switching = false;
 
     public Prefs(Context context) {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -31,7 +31,4 @@ public class Prefs implements SharedPreferences.OnSharedPreferenceChangeListener
         }
     }
 
-    public boolean isKeyboardSwitchingEnabled() {
-        return pref_keyboard_switching;
-    }
 }

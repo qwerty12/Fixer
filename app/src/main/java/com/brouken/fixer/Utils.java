@@ -31,7 +31,7 @@ public class Utils {
         //log("changeIME()");
 
         boolean ret = false;
-        final String ime = !temporaryIME ? "org.dslul.openboard.inputmethod.latin/.LatinIME" : "org.pocketworkstation.pckeyboard/.LatinIME";
+        final String ime = !temporaryIME ? "com.google.android.inputmethod.latin/com.android.inputmethod.latin.LatinIME" : "org.pocketworkstation.pckeyboard/.LatinIME";
 
         try {
             if (!hasWriteSecureSettingsPerm) {

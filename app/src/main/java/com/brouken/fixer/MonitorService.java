@@ -2,6 +2,7 @@ package com.brouken.fixer;
 
 import android.accessibilityservice.AccessibilityService;
 import android.view.accessibility.AccessibilityEvent;
+import android.view.accessibility.AccessibilityNodeInfo;
 
 public class MonitorService extends AccessibilityService {
 
@@ -29,26 +30,33 @@ public class MonitorService extends AccessibilityService {
         //log("onAccessibilityEvent()");
         //log(accessibilityEvent.toString());
 
-        if (!mPrefs.isKeyboardSwitchingEnabled()) {
+        if (!mPrefs.pref_keyboard_switching) {
             setHk = false;
             return;
         }
 
-        if (accessibilityEvent.getEventType() != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED)
+        if (accessibilityEvent == null || accessibilityEvent.getEventType() != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED)
             return;
 
-        final String rootPackageName = getRootInActiveWindow().getPackageName().toString();
-        if (rootPackageName.equals("com.termux") || rootPackageName.equals("com.microsoft.rdc.androidx")) {
-            if (!setHk)
-                setHk = Utils.changeIME(getApplicationContext(), true);
-            return;
+        final AccessibilityNodeInfo rootInActiveWindow = getRootInActiveWindow();
+        if (rootInActiveWindow != null) {
+            final CharSequence rootPackageName = rootInActiveWindow.getPackageName();
+            if (rootPackageName != null) {
+                if ("com.termux".contentEquals(rootPackageName) || "com.microsoft.rdc.androidx".contentEquals(rootPackageName)) {
+                    if (!setHk)
+                        setHk = Utils.changeIME(getApplicationContext(), true);
+                    return;
+                }
+            }
         }
 
         if (setHk) {
-            final String accessibilityEventPackageName = accessibilityEvent.getPackageName().toString();
-            if (accessibilityEventPackageName.equals("org.pocketworkstation.pckeyboard")) {
-                Utils.changeIME(getApplicationContext(), false);
-                setHk = false;
+            final CharSequence packageName = accessibilityEvent.getPackageName();
+            if (packageName != null) {
+                if ("org.pocketworkstation.pckeyboard".contentEquals(packageName)) {
+                    setHk = false;
+                    Utils.changeIME(getApplicationContext(), false);
+                }
             }
         }
     }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <accessibility-service
     android:accessibilityEventTypes="typeWindowStateChanged"
-    android:packageNames="org.dslul.openboard.inputmethod.latin,org.pocketworkstation.pckeyboard,com.android.settings"
+    android:packageNames="com.google.android.inputmethod.latin,org.pocketworkstation.pckeyboard,com.android.settings"
     android:accessibilityFeedbackType="feedbackGeneric"
     android:canRetrieveWindowContent="true"
-    android:accessibilityFlags="flagIncludeNotImportantViews|flagRetrieveInteractiveWindows|flagReportViewIds"
+    android:accessibilityFlags="flagRetrieveInteractiveWindows"
     xmlns:android="http://schemas.android.com/apk/res/android" />
