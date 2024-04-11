@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- Adaptive icons -->
-    <item component="ComponentInfo{com.bodunov.GalileoPro/com.bodunov.galileo.SplashActivity}" drawable="guru_maps" />
-</resources>

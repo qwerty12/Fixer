@@ -10,14 +10,14 @@ public class Utils {
 
     private static boolean hasWriteSecureSettingsPerm = false;
 
-    public static void log(String text) {
+    public static void log(final String text) {
         if (BuildConfig.DEBUG) {
             if (text != null)
                 Log.d("Fixer", text);
         }
     }
 
-    public static boolean changeIME(Context context, boolean temporaryIME) {
+    public static boolean changeIME(final Context context, final boolean temporaryIME) {
         // https://stackoverflow.com/questions/11036435/switch-keyboard-profile-programmatically
         // ime list -s
         // com.google.android.inputmethod.latin/com.android.inputmethod.latin.LatinIME
@@ -31,7 +31,7 @@ public class Utils {
         //log("changeIME()");
 
         boolean ret = false;
-        final String ime = !temporaryIME ? "com.google.android.inputmethod.latin/com.android.inputmethod.latin.LatinIME" : "org.pocketworkstation.pckeyboard/.LatinIME";
+        final String ime = !temporaryIME ? "helium314.keyboard/.latin.LatinIME" : "org.pocketworkstation.pckeyboard/.LatinIME";
 
         try {
             if (!hasWriteSecureSettingsPerm) {

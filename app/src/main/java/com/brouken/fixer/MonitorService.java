@@ -4,7 +4,7 @@ import android.accessibilityservice.AccessibilityService;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 
-public class MonitorService extends AccessibilityService {
+public final class MonitorService extends AccessibilityService {
 
     private Prefs mPrefs = null;
     private boolean setHk;
@@ -26,7 +26,7 @@ public class MonitorService extends AccessibilityService {
     }
 
     @Override
-    public void onAccessibilityEvent(AccessibilityEvent accessibilityEvent) {
+    public void onAccessibilityEvent(final AccessibilityEvent accessibilityEvent) {
         //log("onAccessibilityEvent()");
         //log(accessibilityEvent.toString());
 

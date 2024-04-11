@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 34
+    compileSdk 34
     defaultConfig {
         applicationId "com.brouken.fixer"
         minSdkVersion 26
@@ -9,13 +9,22 @@ android {
         targetSdkVersion 28
         versionCode 3
         versionName "0.3"
+        resourceConfigurations ['en']
     }
+
+    buildFeatures {
+        buildConfig true
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    namespace 'com.brouken.fixer'
 }
 
 dependencies {

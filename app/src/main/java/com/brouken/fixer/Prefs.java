@@ -4,19 +4,19 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-public class Prefs implements SharedPreferences.OnSharedPreferenceChangeListener {
+final class Prefs implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     SharedPreferences mSharedPreferences;
 
-    public boolean pref_keyboard_switching = false;
+    boolean pref_keyboard_switching = false;
 
-    public Prefs(Context context) {
+    Prefs(final Context context) {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         loadSavedPreferences();
         mSharedPreferences.registerOnSharedPreferenceChangeListener(this);
     }
 
-    protected void dePrefs() {
+    void dePrefs() {
         mSharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
     }
 
@@ -25,10 +25,9 @@ public class Prefs implements SharedPreferences.OnSharedPreferenceChangeListener
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-        if (s != null && s.equals("pref_keyboard_switching")) {
+    public void onSharedPreferenceChanged(final SharedPreferences sharedPreferences, final String s) {
+        if ("pref_keyboard_switching".equals(s))
             loadSavedPreferences();
-        }
     }
 
 }
